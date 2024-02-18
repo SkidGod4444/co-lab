@@ -1,4 +1,6 @@
+"use client";
 import Heading from '@/components/global/home/heading'
+
 
 export default function HomePage() {
   return (

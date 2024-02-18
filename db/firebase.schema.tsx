@@ -1,8 +1,8 @@
-interface UserSchema {
+export interface UserSchema {
     id: string;
-    name: string;
-    email: string;
-    gitToken: string;
+    name: string | null;
+    email: string | null;
+    gitToken?: string | any;
     createdTeams?: TeamSchema[];
     joinedTeams?: TeamSchema[];
     adminTeams?: TeamSchema[];
@@ -33,6 +33,7 @@ interface ChatSchema {
     users: UserSchema[];
     teamId: string;
     messages: MsgSchema[];
+    deleteAfter?: Date;
     createdAt: Date;
     updatedAt: Date;
 
@@ -88,7 +89,7 @@ interface DiscussionsSchema {
     updatedAt: Date;
 }
 
-interface GitRepoSchema {
+export interface GitRepoSchema {
     id: string;
     userId: string;
     teamId: string;
@@ -106,22 +107,36 @@ interface GitRepoSchema {
 
 }
 
-interface TeamSchema {
+export interface NotificationSchema {
     id: string;
-    name: string;
-    userId: string;
-    teamOwner: UserSchema;
-    teamAdmins: UserSchema[];
-    isArchived: boolean;
-    isPublic: boolean;
+    teamId: string;
+    title: string;
+    content: string;
+    isAlert?: boolean;
+    isNotify?: boolean;
+    isSuggestion?: boolean;
+    isReadByAll?: boolean;
+    readers: UserSchema[];
+    createdAt: Date;
+    updatedAt: Date;
+}
+
+export interface TeamSchema {
+    id: string;
+    name: string | null;
+    teamOwner: string | UserSchema;
+    teamAdmins?: UserSchema[];
+    isArchived?: boolean;
+    isPublic?: boolean;
     gitRepos?: GitRepoSchema[];
     teamInviteLink?: string;
     parentOrg?: string | "teams";
     icon?: string;
     coverImg?: string;
+    notifications?: NotificationSchema[];
     chats?: ChatSchema[];
     todos?: TodoSchema[];
-    mems: UserSchema[];
+    mems?: UserSchema[];
     createdAt: Date;
     updatedAt: Date;
 }

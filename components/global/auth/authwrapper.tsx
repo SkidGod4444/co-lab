@@ -1,6 +1,7 @@
 "use client";
 import { useUser } from '@/db/models/firebase.modals';
 import { privateRoutes } from '@/routes';
+import { useEffect } from 'react';
 
 interface AuthWrapperProps {
   children: React.ReactNode;

@@ -1,9 +1,26 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { useUser } from "@/db/models/firebase.modals";
+import { useUser, writeTeamData, getTeamsByTeamOwnerId } from "@/db/models/firebase.modals";
 import { PartyPopper, PlusCircle } from "lucide-react";
 import Image from "next/image";
+import { toast } from "sonner";
+import { getAuth } from "firebase/auth";
+import { randomIntGen } from "@/db/models/firebase.modals";
+
+export const handleTeamCreate = () => {
+  const User =  getAuth().currentUser;
+  if (User) {
+    writeTeamData({
+      id: randomIntGen(),
+      name: "Undefined",
+      teamOwner: User.uid,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    });
+  }
+  toast.success("Team created successfully");
+}
 
 export default function TeamsPage() {
   const User = useUser();
@@ -34,7 +51,7 @@ export default function TeamsPage() {
           "Fetching..."
         )}
       </h2>
-      <Button>
+      <Button onClick={handleTeamCreate}>
         <PlusCircle className="h-6 w-6 mr-2" />
         Create a team
       </Button>
