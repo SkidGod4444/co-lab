@@ -3,9 +3,24 @@ import UserItem from './user.item'
 import { PlusCircle, Search, Settings } from 'lucide-react'
 import { Item } from './items'
 import { TeamList } from './team.list'
-import { handleTeamCreate } from '@/app/(main)/(routes)/dashboard/page'
+import { getAuth } from 'firebase/auth'
+import { randomIntGen, writeTeamData } from '@/db/models/firebase.modals'
+import { toast } from 'sonner'
 
 export default function SideBar() {
+   const handleTeamCreate = () => {
+    const User =  getAuth().currentUser;
+    if (User) {
+      writeTeamData({
+        id: randomIntGen(),
+        name: "Undefined",
+        teamOwner: User.uid,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      });
+    }
+    toast.success("Team created successfully");
+  }
   return (
     <>
     <div>

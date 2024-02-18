@@ -8,22 +8,22 @@ import { toast } from "sonner";
 import { getAuth } from "firebase/auth";
 import { randomIntGen } from "@/db/models/firebase.modals";
 
-export const handleTeamCreate = () => {
-  const User =  getAuth().currentUser;
-  if (User) {
-    writeTeamData({
-      id: randomIntGen(),
-      name: "Undefined",
-      teamOwner: User.uid,
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    });
-  }
-  toast.success("Team created successfully");
-}
 
 export default function TeamsPage() {
   const User = useUser();
+  const handleTeamCreate = () => {
+    const User =  getAuth().currentUser;
+    if (User) {
+      writeTeamData({
+        id: randomIntGen(),
+        name: "Undefined",
+        teamOwner: User.uid,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      });
+    }
+    toast.success("Team created successfully");
+  }
   return (
     <div className="h-full flex flex-col items-center justify-center space-y-4">
       <Image
